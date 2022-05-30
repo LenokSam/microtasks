@@ -15,7 +15,10 @@ type BanknotsType = {
 }
 type MoneyListType = {
   moneys: Array<BanknotsType>
+  handlerOnClick: ()=>void
 }
+
+type FilterType='ALL'| 'DOLLARS' |'RUBLS'
 
 
 function App() {
@@ -32,12 +35,19 @@ function App() {
   ])
 
 
+ const [typeMoney, setTypeMoney] = useState<FilterType>('ALL')
 
+  let currentMoney = money
+  if (typeMoney !== 'ALL') {
+    currentMoney =money.filter((filterMoney) => filterMoney.banknots.toLowerCase() == typeMoney.toLowerCase())
+  }
+  const changeBanknotsOfType = (type: FilterType) => {
+    setTypeMoney(type)
+  }
 
   return (
     <div className="App">
-
-      <MoneyList moneys={money}></MoneyList>
+      <MoneyList moneys={currentMoney} handlerOnClick={changeBanknotsOfType}></MoneyList>
     </div>
   );
 }

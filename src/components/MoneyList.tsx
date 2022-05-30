@@ -8,27 +8,23 @@ type BanknotsType = {
 }
 type MoneyListType = {
   moneys: Array<BanknotsType>
+  handlerOnClick:(type: FilterType)=>void
 }
 type FilterType='ALL'| 'DOLLARS' |'RUBLS'
 
-const MoneyList = (props: MoneyListType) => {
-  const {moneys} = props
 
-  const [typeMoney, setTypeMoney] = useState<FilterType>('ALL')
-  const [moneysForDisplay, setMoneysForDisplay] = useState(moneys)
-  const getBanknotsOfType = (type: FilterType) => {
-    setTypeMoney(type)
-  }
-  let currentMoney = moneys
-  if (typeMoney !== 'ALL') {
-    currentMoney =moneys.filter((filterMoney) => filterMoney.banknots.toLowerCase() == typeMoney.toLowerCase())
+const MoneyList = (props: MoneyListType) => {
+  const {moneys, handlerOnClick} = props
+
+  const setBanknotType = (type: FilterType) => {
+    handlerOnClick(type)
   }
 
   return (
     <>
       <ul>
         {
-          currentMoney.map((banknots) => {
+          moneys.map((banknots) => {
             return (
               <li key={banknots.number}>
                 <span>{banknots.banknots}</span>
@@ -40,16 +36,16 @@ const MoneyList = (props: MoneyListType) => {
       </ul>
 
       <button onClick={() => {
-        getBanknotsOfType('DOLLARS')
+        setBanknotType('DOLLARS')
       }}>DOLLARS
       </button>
       <button onClick={() => {
-        getBanknotsOfType('RUBLS')
+        setBanknotType('RUBLS')
       }}>RUBLS
       </button>
       <button onClick={() => {
-        getBanknotsOfType('ALL')
-      }}>ALL
+        setBanknotType('ALL')
+      }}>SHOW ALL
       </button>
     </>
   );
