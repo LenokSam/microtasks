@@ -1,6 +1,9 @@
 import React, {useState} from 'react';
 import './App.css';
 import MoneyList from './components/MoneyList';
+import Microtask2 from './Microtask2';
+import Button from './components/Button';
+import Input from './components/input/Input';
 // task1
 const topCars = [
   {manufacturer: 'BMW', model: 'm5cs'},
@@ -15,13 +18,20 @@ type BanknotsType = {
 }
 type MoneyListType = {
   moneys: Array<BanknotsType>
-  handlerOnClick: ()=>void
+  handlerOnClick: () => void
 }
 
-type FilterType='ALL'| 'DOLLARS' |'RUBLS'
+type FilterType = 'ALL' | 'DOLLARS' | 'RUBLS'
 
 
 function App() {
+
+  const [messages, setMessages] = useState([
+    {message: 'message1'},
+    {message: 'message2'},
+    {message: 'message3'}
+
+  ])
 
   const [money, setMoney] = useState([
     {banknots: 'Dollars', value: 100, number: ' a1234567890'},
@@ -35,11 +45,11 @@ function App() {
   ])
 
 
- const [typeMoney, setTypeMoney] = useState<FilterType>('ALL')
+  const [typeMoney, setTypeMoney] = useState<FilterType>('ALL')
 
   let currentMoney = money
   if (typeMoney !== 'ALL') {
-    currentMoney =money.filter((filterMoney) => filterMoney.banknots.toLowerCase() == typeMoney.toLowerCase())
+    currentMoney = money.filter((filterMoney) => filterMoney.banknots.toLowerCase() === typeMoney.toLowerCase())
   }
   const changeBanknotsOfType = (type: FilterType) => {
     setTypeMoney(type)
@@ -47,7 +57,10 @@ function App() {
 
   return (
     <div className="App">
-      <MoneyList moneys={currentMoney} handlerOnClick={changeBanknotsOfType}></MoneyList>
+      {/*<MoneyList moneys={currentMoney} handlerOnClick={changeBanknotsOfType}></MoneyList>*/}
+      {/*<Button name={'Add'} callBack={()=>{}}/>*/}
+      {/*<Input/>*/}
+      <Microtask2/>
     </div>
   );
 }
